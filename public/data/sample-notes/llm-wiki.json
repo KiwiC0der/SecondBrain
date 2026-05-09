@@ -1,0 +1,11 @@
+{
+  "id": "llm-wiki",
+  "title": "LLM Wiki",
+  "category": "concepts",
+  "firstParagraph": "An LLM-curated, human-maintained knowledge wiki. Raw sources are immutable; the wiki is the durable, queryable artifact.",
+  "neighbors": [
+    { "id": "second-brain", "title": "Second Brain" },
+    { "id": "obsidian", "title": "Obsidian" },
+    { "id": "agentic-loop", "title": "Agentic Loop" }
+  ]
+}

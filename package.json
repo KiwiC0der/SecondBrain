@@ -1,0 +1,33 @@
+{
+  "name": "second-brain-galaxy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Painterly 3D galaxy view of an Obsidian vault, with a Cleo avatar.",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run ingest && tsc -b --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "ingest": "tsx tools/ingest.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@tweakpane/plugin-essentials": "^0.2.1",
+    "d3-force-3d": "^3.0.6",
+    "three": "^0.184.0",
+    "tweakpane": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@types/three": "^0.184.1",
+    "chokidar": "^5.0.0",
+    "dotenv": "^17.4.2",
+    "gray-matter": "^4.0.3",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.11"
+  }
+}

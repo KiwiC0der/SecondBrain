@@ -1,0 +1,10 @@
+{
+  "id": "force-directed",
+  "title": "Force Directed Layout",
+  "category": "concepts",
+  "firstParagraph": "Treat each node as a charged particle; treat each edge as a spring. Run a simulation. Where particles settle is the layout.",
+  "neighbors": [
+    { "id": "knowledge-graph", "title": "Knowledge Graph" },
+    { "id": "obsidian", "title": "Obsidian" }
+  ]
+}

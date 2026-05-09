@@ -1,0 +1,11 @@
+{
+  "id": "second-brain",
+  "title": "Second Brain",
+  "category": "concepts",
+  "firstParagraph": "A persistent external memory system: capture, distill, connect, and retrieve. The galaxy view treats every note as a star and every wikilink as a connection.",
+  "neighbors": [
+    { "id": "llm-wiki", "title": "LLM Wiki" },
+    { "id": "knowledge-graph", "title": "Knowledge Graph" },
+    { "id": "synthesis", "title": "Synthesis" }
+  ]
+}

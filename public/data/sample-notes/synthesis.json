@@ -1,0 +1,11 @@
+{
+  "id": "synthesis",
+  "title": "Synthesis",
+  "category": "syntheses",
+  "firstParagraph": "Where ideas from many sources collide. Synthesis pages are the gravitational anchors of a wiki — they pull diverse threads into shape.",
+  "neighbors": [
+    { "id": "second-brain", "title": "Second Brain" },
+    { "id": "agent-skills", "title": "Agent Skills" },
+    { "id": "karpathy", "title": "Andrej Karpathy" }
+  ]
+}

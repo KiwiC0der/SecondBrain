@@ -1,0 +1,11 @@
+{
+  "id": "obsidian",
+  "title": "Obsidian",
+  "category": "concepts",
+  "firstParagraph": "A local-first markdown editor with a graph view. The first-class citizen is the wikilink: [[like this]].",
+  "neighbors": [
+    { "id": "wikilinks", "title": "Wikilinks" },
+    { "id": "llm-wiki", "title": "LLM Wiki" },
+    { "id": "force-directed", "title": "Force Directed Layout" }
+  ]
+}

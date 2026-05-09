@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Second Brain Galaxy</title>
+    <style>
+      :root { color-scheme: dark; }
+      html, body { margin: 0; padding: 0; height: 100%; background: #06070b; color: #e8e8ec; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow: hidden; }
+      #app { position: fixed; inset: 0; }
+      canvas { display: block; width: 100%; height: 100%; }
+      #boot {
+        position: fixed; inset: 0; display: grid; place-items: center;
+        background: radial-gradient(ellipse at center, #0c0e16 0%, #06070b 70%);
+        font-size: 14px; letter-spacing: 0.04em; color: #aab; user-select: none;
+        transition: opacity 0.6s ease;
+      }
+      #boot.gone { opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="boot">drifting in&hellip;</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

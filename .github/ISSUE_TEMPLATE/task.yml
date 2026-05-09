@@ -1,0 +1,26 @@
+name: Task
+description: A unit of implementation work
+title: "[task] "
+labels: [task]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences on what this task delivers.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Bullet list of observable outcomes that mark this done.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything else (links, gotchas, dependencies on other issues).
+    validations:
+      required: false

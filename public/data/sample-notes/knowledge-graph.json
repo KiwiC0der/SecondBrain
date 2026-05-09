@@ -1,0 +1,13 @@
+{
+  "id": "knowledge-graph",
+  "title": "Knowledge Graph",
+  "category": "concepts",
+  "firstParagraph": "Nodes are concepts, edges are relations. Force-directed layouts let structure emerge — clusters become visible without an author having to draw them.",
+  "neighbors": [
+    { "id": "force-directed", "title": "Force Directed Layout" },
+    { "id": "wikilinks", "title": "Wikilinks" },
+    { "id": "ingest", "title": "Ingest" },
+    { "id": "second-brain", "title": "Second Brain" },
+    { "id": "rag", "title": "Retrieval Augmented Gen" }
+  ]
+}

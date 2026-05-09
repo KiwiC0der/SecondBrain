@@ -1,0 +1,12 @@
+{
+  "id": "agentic-loop",
+  "title": "Agentic Loop",
+  "category": "concepts",
+  "firstParagraph": "Reason, act, observe. An agent assembles context, picks a tool, runs it, updates context, and iterates until the task closes.",
+  "neighbors": [
+    { "id": "agent-skills", "title": "Agent Skills" },
+    { "id": "rag", "title": "Retrieval Augmented Gen" },
+    { "id": "mcp", "title": "MCP" },
+    { "id": "llm-wiki", "title": "LLM Wiki" }
+  ]
+}
