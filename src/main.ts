@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { loadGraph, subscribeGraphUpdates } from './data/graphLoader';
 import { World } from './world/World';
+import { Controls } from './world/Controls';
+import { Picker } from './world/Picker';
+import { Hud } from './ui/hud';
 import { params } from './state/params';
 
 const appEl = document.getElementById('app') as HTMLElement;
@@ -20,10 +23,48 @@ const camera = new THREE.PerspectiveCamera(
   params.camera.near,
   params.camera.far,
 );
-camera.position.set(0, 12, 38);
-camera.lookAt(0, 0, 0);
 
 const world = new World(renderer);
+const controls = new Controls(world.avatar, camera, renderer.domElement);
+const picker = new Picker(world.graph, camera, renderer.domElement);
+const hud = new Hud();
+
+picker.onChange((index) => {
+  const node = index >= 0 ? world.graph.nodeRuntimes[index]?.data ?? null : null;
+  world.graph.setHoveredIndex(index);
+  if (node) {
+    const px = picker.mousePixelPos;
+    hud.showTooltip(node, px.x, px.y);
+  } else {
+    hud.showTooltip(null, 0, 0);
+  }
+});
+
+renderer.domElement.addEventListener('click', (e) => {
+  const pick = picker.pickFromMousePixel();
+  if (pick) {
+    const node = world.graph.nodeRuntimes[pick.index]?.data;
+    if (node) {
+      void hud.openCard(node);
+    }
+    return;
+  }
+  // Don't lock if user clicked over the card or the card is open.
+  if (hud.isCardOpen) return;
+  if (e.target !== renderer.domElement) return;
+  controls.requestLock();
+});
+
+hud.setOnNeighborClick((id) => {
+  const idx = world.graph.nodeRuntimes.findIndex((n) => n.id === id);
+  if (idx < 0) return;
+  const target = world.graph.nodeRuntimes[idx]?.data;
+  if (target) void hud.openCard(target);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Escape' && hud.isCardOpen) hud.closeCard();
+});
 
 function onResize(): void {
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -36,29 +77,15 @@ function onResize(): void {
 window.addEventListener('resize', onResize);
 
 const clock = new THREE.Clock();
-let cameraAngle = 0;
 
 function loop(): void {
   const dt = Math.min(0.05, clock.getDelta());
   const time = clock.elapsedTime;
 
-  // Temporary M2 auto-orbit; replaced by yaw-based 3rd-person rig in M3.
-  cameraAngle += dt * 0.07;
-  const r = 32 + Math.sin(time * 0.13) * 4;
-  const focus = world.graph.centerOfMass();
-  camera.position.set(
-    focus.x + Math.cos(cameraAngle) * r,
-    focus.y + 8 + Math.sin(cameraAngle * 0.7) * 3,
-    focus.z + Math.sin(cameraAngle) * r,
-  );
-  camera.lookAt(focus);
-  // Park Cleo near the focus, tangent to the orbit so she's nicely framed.
-  world.avatar.setPose(
-    new THREE.Vector3(focus.x, focus.y - 1, focus.z),
-    cameraAngle + Math.PI * 0.5,
-  );
-
+  controls.update(dt);
   world.update(dt, time);
+  picker.update();
+
   renderer.render(world.scene, camera);
   requestAnimationFrame(loop);
 }
@@ -69,10 +96,12 @@ function loop(): void {
     world.setGraphData(graph);
     console.info(`[galaxy] loaded ${graph.nodes.length} nodes / ${graph.links.length} links from ${source.url}${source.isSample ? ' (sample)' : ''}`);
 
-    // Bake env cube before loading Cleo so her materials grab it.
     world.bakeEnv(renderer);
 
-    // Cleo loads in parallel; if she fails we still want the galaxy visible.
+    // Place Cleo at the graph's center of mass for a nice opening shot.
+    const com = world.graph.centerOfMass();
+    controls.setInitialPose(com.clone(), 0);
+
     void world.loadAvatar('/cleo.glb').catch((err) => {
       console.warn('[galaxy] avatar load failed:', err);
     });

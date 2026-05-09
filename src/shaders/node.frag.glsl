@@ -4,6 +4,7 @@ varying vec2  vUv;
 varying vec3  vColor;
 varying float vGlow;
 varying float vSeed;
+varying float vHover;
 
 uniform float uTime;
 
@@ -30,6 +31,9 @@ void main() {
   vec3 col = vColor * (1.4 * vGlow);
   // Whiten the very center.
   col = mix(col, vec3(1.0), core * 0.7);
+  // Hover lift: brighten and add a faint white halo ring.
+  col = mix(col, col * 1.4 + vec3(0.15), vHover);
+  alpha = mix(alpha, min(1.0, alpha + 0.18), vHover);
 
   gl_FragColor = vec4(col, alpha);
 }

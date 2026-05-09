@@ -60,6 +60,8 @@ export class Graph {
       blending: THREE.AdditiveBlending,
       uniforms: {
         uTime: { value: 0 },
+        uHoveredIndex: { value: -1 },
+        uHoverScale: { value: params.nodes.hoverScale },
       },
     });
 
@@ -161,6 +163,9 @@ export class Graph {
     geo.setAttribute('iSize', this.nodeSizeAttr);
     geo.setAttribute('iGlow', this.nodeGlowAttr);
     geo.setAttribute('iSeed', new THREE.InstancedBufferAttribute(this.nodeSeeds, 1));
+    const indices = new Float32Array(count);
+    for (let i = 0; i < count; i++) indices[i] = i;
+    geo.setAttribute('iIndex', new THREE.InstancedBufferAttribute(indices, 1));
     geo.instanceCount = count;
     geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), 200);
 
@@ -251,11 +256,16 @@ export class Graph {
 
   syncUniforms(time: number): void {
     this.nodeMat.uniforms.uTime!.value = time;
+    this.nodeMat.uniforms.uHoverScale!.value = params.nodes.hoverScale;
     this.linkMat.uniforms.uTime!.value = time;
     this.linkMat.uniforms.uOpacity!.value = params.links.opacity;
     (this.linkMat.uniforms.uInkColor!.value as THREE.Color).copy(params.links.inkColor);
     this.linkMat.uniforms.uWobbleAmp!.value = params.links.wobbleAmp;
     this.linkMat.uniforms.uWobbleSpeed!.value = params.links.wobbleSpeed;
+  }
+
+  setHoveredIndex(index: number): void {
+    this.nodeMat.uniforms.uHoveredIndex!.value = index;
   }
 
   /** Center of mass, useful for camera framing on first load. */
