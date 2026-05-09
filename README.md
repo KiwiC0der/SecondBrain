@@ -6,7 +6,7 @@ Built with Vite, TypeScript, Three.js. Procedurally generated nebulas, force-dir
 
 ## Status
 
-Foundation in progress. See [GitHub issues](https://github.com/KiwiC0der/SecondBrain/issues) and milestones M1–M4.
+M1–M4 complete. See [GitHub issues](https://github.com/KiwiC0der/SecondBrain/issues) and milestones for ongoing work.
 
 ## Quick start
 
@@ -32,14 +32,38 @@ npm run dev                  # ingest runs once, watcher hot-reloads on note cha
 | script | what it does |
 | --- | --- |
 | `npm run dev` | Vite dev server + vault watcher with HMR-pushed graph updates |
-| `npm run ingest` | One-shot vault scan; emits `data/graph.json` and `data/notes/*.json` |
+| `npm run ingest` | One-shot vault scan; emits `public/data/graph.json` and `public/data/notes/*.json` |
 | `npm run build` | Ingest + typecheck + production build to `dist/` |
 | `npm run preview` | Serve `dist/` for sanity-checking a build |
 | `npm run typecheck` | TypeScript project-references check |
 
 ## Controls
 
-(Filled in during M3.)
+Click the canvas to capture the mouse, then:
+
+| key / mouse | action |
+| --- | --- |
+| `W` `A` `S` `D` | Move forward / strafe / back |
+| `Space` / `Ctrl` | Ascend / descend |
+| `Shift` | Boost (sprint) |
+| Mouse | Yaw + pitch (avatar locked center-frame, banks on turns) |
+| `Esc` | Release pointer lock / close open node card |
+| Hover a node | Tooltip with title + degree |
+| Click a node | Open the HUD card (title, first paragraph, neighbors) |
+| `H` | Hide / show the dev toolbar |
+
+The dev toolbar (top-right) exposes every tunable parameter — galaxy, env, nodes, links, forces, avatar, movement, camera, post chain, debug. Use the **Presets** folder to save/load named looks (`default`, `cinematic`, `sketch`, `noir` ship built-in). All edits persist to `localStorage` and can be exported / imported as JSON.
+
+## Deploy
+
+Any static host works. The build output is plain `dist/` with no server.
+
+```bash
+npm run build           # ingests vault if VAULT_PATH set, else uses sample data
+npm run preview         # local sanity check of dist/
+```
+
+GitHub Pages, Netlify, Vercel, Cloudflare Pages — all fine; just point the publish dir at `dist`. CI typechecks and builds on every push (`.github/workflows/ci.yml`) and uploads `dist` as an artifact.
 
 ## Repo layout
 
@@ -52,8 +76,9 @@ galaxy/
     post/                      # EffectComposer pipeline
     ui/                        # Tweakpane toolbar, presets, HUD
     data/                      # graph loader, types
+    state/params.ts            # single source of truth for tunables
   tools/ingest.ts              # vault -> graph.json + per-note JSON
-  data/                        # generated graph + sample fallback
+  public/data/                 # generated graph + sample fallback (served verbatim)
   public/cleo.glb              # the avatar (committed)
   .github/workflows/ci.yml     # typecheck + build on push/PR
 ```
