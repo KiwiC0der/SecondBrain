@@ -87,6 +87,29 @@ export interface Params {
     near: number;
     far: number;
   };
+  post: {
+    kuwahara: { enabled: boolean; radius: number; passes: number };
+    outline:  { enabled: boolean; thickness: number; threshold: number; inkColor: THREE.Color; strength: number };
+    bloom:    { enabled: boolean; threshold: number; strength: number; radius: number };
+    chromatic:{ enabled: boolean; amount: number; falloff: number };
+    grain:    { enabled: boolean; intensity: number; scale: number; paper: boolean };
+    compose:  {
+      enabled: boolean;
+      vignette: number;
+      vignetteSoftness: number;
+      hueShift: number;
+      sat: number;
+      contrast: number;
+      lift: number;
+      gamma: number;
+      gain: number;
+    };
+  };
+  debug: {
+    showFps: boolean;
+    showStats: boolean;
+    freeFly: boolean;
+  };
 }
 
 export const DEFAULT_PARAMS: Params = {
@@ -171,6 +194,35 @@ export const DEFAULT_PARAMS: Params = {
     fov: 60,
     near: 0.1,
     far: 5000,
+  },
+  post: {
+    kuwahara: { enabled: true, radius: 3, passes: 1 },
+    outline: {
+      enabled: true,
+      thickness: 1.0,
+      threshold: 0.012,
+      inkColor: new THREE.Color('#1a1838'),
+      strength: 0.55,
+    },
+    bloom: { enabled: true, threshold: 0.62, strength: 0.62, radius: 0.8 },
+    chromatic: { enabled: true, amount: 0.0035, falloff: 0.65 },
+    grain: { enabled: true, intensity: 0.085, scale: 1700, paper: false },
+    compose: {
+      enabled: true,
+      vignette: 0.35,
+      vignetteSoftness: 0.42,
+      hueShift: 0.0,
+      sat: 1.05,
+      contrast: 1.06,
+      lift: 0.0,
+      gamma: 1.0,
+      gain: 1.0,
+    },
+  },
+  debug: {
+    showFps: true,
+    showStats: false,
+    freeFly: false,
   },
 };
 
